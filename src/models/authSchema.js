@@ -10,7 +10,7 @@ const signUpSchema = joi.object({
 const signInSchema = joi.object({
   email: joi.string().email().required(),
   password: joi.string().required().min(8)
-})
+});
 
 async function validateSignUp(req, res, next) {
   const { firstname, lastname, email, password } = req.body;
