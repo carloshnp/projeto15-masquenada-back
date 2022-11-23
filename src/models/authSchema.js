@@ -27,7 +27,7 @@ async function validateSignUp(req, res, next) {
   next();
 }
 
-async function validateSignIn() {
+async function validateSignIn(req, res, next) {
   const { email, password } = req.body;
 
   const validation = signInSchema.validate(req.body, { abortEarly: false });
