@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
-import { MongoClient, ObjectId } from 'mongodb';
-
-dotenv.config();
+import { MongoClient } from 'mongodb';
 
 const mongoClient = new MongoClient(process.env.MONGO_URI);
 try {
@@ -11,5 +8,5 @@ try {
     console.log(err);
 }
 
-const db = mongoClient.db("MasQueNada!")
+const db = mongoClient.db("MasQueNada!");
 export const productsCollection = db.collection("products");
