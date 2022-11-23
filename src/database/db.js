@@ -11,5 +11,5 @@ try {
     console.log(err);
 }
 
-const db = mongoClient.db("Mas Que Nada!")
+const db = mongoClient.db("MasQueNada!")
 export const productsCollection = db.collection("products");

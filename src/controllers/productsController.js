@@ -1,53 +1,14 @@
 import { productsCollection } from "../database/db.js";
+import { productSchema } from "../models/productSchema.js";
 
 export async function newProduct(req, res) {
-  const {
-    name,
-    description,
-    price,
-    quantity,
-    type,
-    shirtColor,
-    shirtSize,
-    bootColor,
-    bootSize,
-    ballYear,
-  } = req.body;
+  const product = req.body;
 
   try {
-    if (type === "camisa") {
-      await productsCollection.insertOne({
-        name,
-        description,
-        price,
-        quantity,
-        type,
-        shirtColor,
-        shirtSize,
-      });
-      res.sendStatus(201);
-    } else if (type === "chuteira") {
-      await productsCollection.insertOne({
-        name,
-        description,
-        price,
-        quantity,
-        type,
-        bootColor,
-        bootSize,
-      });
-      res.sendStatus(201);
-    } else if (type === "bola") {
-      await productsCollection.insertOne({
-        name,
-        description,
-        price,
-        quantity,
-        type,
-        ballYear,
-      });
-      res.sendStatus(201);
-    }
+    const validateProduct = await productSchema.validateAsync(product)
+
+    await productsCollection.insertOne(product);
+    res.sendStatus(201);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
