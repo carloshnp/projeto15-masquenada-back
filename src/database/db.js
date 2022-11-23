@@ -10,5 +10,6 @@ try {
 
 const db = mongoClient.db("MasQueNada!");
 
-export const productsCollection = db.collection("products");
 export const usersCollection = db.collection("users");
+export const sessionCollection = db.collection("session");
+export const productsCollection = db.collection("products");
