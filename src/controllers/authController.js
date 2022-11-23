@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
-import { usersCollection } from '../database/db.js';
+import { v4 as uuid } from 'uuid';
+import { sessionCollection, usersCollection } from '../database/db.js';
 
 async function signUp(req, res) {
   const { firstname, lastname, email, password } = res.locals.user;
@@ -29,4 +30,35 @@ async function signUp(req, res) {
   }
 }
 
-export { signUp };
+async function signIn(req, res) {
+  const { email, password } = res.locals.user;
+
+  try {
+      const user = await usersCollection.findOne({ email });
+
+      if (!user || !bcrypt.compareSync(password, user.password)) {
+          return res.sendStatus(401);
+      }
+
+      const token = uuid();
+
+      await sessionCollection.deleteOne({ userId: user._id });
+
+      await sessionCollection.insertOne({
+          userId: user._id,
+          token
+      });
+
+      delete user.password;
+
+      res.status(200).send({
+          ...user,
+          token
+      });
+
+  } catch (error) {
+      res.status(500).send(error.message);
+  }
+};
+
+export { signUp, signIn };
