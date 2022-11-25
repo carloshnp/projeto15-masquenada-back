@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { sessionCollection, usersCollection } from '../database/db.js';
 
 async function signUp(req, res) {
-  const { firstname, lastname, email, password } = res.locals.user;
+  const { name, email, password } = res.locals.user;
 
   const passwordHash = bcrypt.hashSync(password, 10);
 
@@ -17,8 +17,7 @@ async function signUp(req, res) {
     }
 
     await usersCollection.insertOne({
-      firstname,
-      lastname,
+      name,
       email,
       password: passwordHash
     });

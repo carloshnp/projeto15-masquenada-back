@@ -1,10 +1,10 @@
 import joi from 'joi';
 
 const signUpSchema = joi.object({
-  firstname: joi.string().required(),
-  lastname: joi.string().required(),
+  name: joi.string().required(),
   email: joi.string().email().required(),
-  password: joi.string().required().min(8)
+  password: joi.string().required().min(8), 
+  confirmPassword: joi.ref("password")
 });
 
 const signInSchema = joi.object({
@@ -13,7 +13,7 @@ const signInSchema = joi.object({
 });
 
 async function validateSignUp(req, res, next) {
-  const { firstname, lastname, email, password } = req.body;
+  const { name, email, password, confirmPassword } = req.body;
 
   const validation = signUpSchema.validate(req.body, { abortEarly: false });
 
@@ -22,7 +22,11 @@ async function validateSignUp(req, res, next) {
     return res.status(422).send(error);
   }
 
-  res.locals.user = { firstname, lastname, email, password };
+  if (password !== confirmPassword) {
+    return res.status(422).send("Passwords don't match!");
+  }
+
+  res.locals.user = { name, email, password };
 
   next();
 }

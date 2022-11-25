@@ -8,7 +8,7 @@ try {
     console.log(err);
 }
 
-const db = mongoClient.db("MasQueNada!");
+const db = mongoClient.db("masquenada");
 
 export const usersCollection = db.collection("users");
 export const sessionCollection = db.collection("session");
