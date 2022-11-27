@@ -3,8 +3,10 @@ import joi from "joi";
 export const productSchema = joi.object({
   name: joi.string().required().min(10),
   description: joi.string().required().min(20),
+  image: joi.string().uri(),
   price: joi.number().required(),
-  quantity: joi.number().required(),
+  orders: joi.number().required(),
+  inStock: joi.string().valid("in stock", "out of stock"),
   type: joi.string().valid("camisa", "chuteira", "bola").required(),
   shirtColor: joi.when("type", {
     is: "camisa",
@@ -12,7 +14,7 @@ export const productSchema = joi.object({
   }),
   shirtSize: joi.when("type", {
     is: "camisa",
-    then: joi.string().required().valid("PP", "P", "M", "G", "GG"),
+    then: joi.array().items(joi.string().valid("PP", "P", "M", "G", "GG").required()),
   }),
   bootColor: joi.when("type", {
     is: "chuteira",
