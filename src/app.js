@@ -10,6 +10,8 @@ app.get("/health", (req, res) => res.send("OK"));
 app.use(productRouter);
 app.use(authRoutes);
 
+const port = process.env.PORT || 5000;
+
 app.listen(port, () => {
   console.log(`App is running in port: ${port}`);
 });
