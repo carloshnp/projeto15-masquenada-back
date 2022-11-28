@@ -5,8 +5,7 @@ export const productCheckoutSchema = joi.object({
   description: joi.string().required().min(20),
   image: joi.string().uri(),
   price: joi.number().required(),
-  orders: joi.number().required(),
-  inStock: joi.string().valid("in stock", "out of stock"),
+  quantity: joi.number().required(),
   type: joi.string().valid("camisa", "chuteira", "bola").required(),
   shirtColor: joi.when("type", {
     is: "camisa",
