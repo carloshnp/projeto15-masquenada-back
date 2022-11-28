@@ -24,4 +24,5 @@ export const productSchema = joi.object({
     is: "bola",
     then: joi.number().valid(2022, 2018, 2014, 2010, 2006, 2002, 1998, 1994).required(),
   }),
+  productInfo: joi.string()
 });
